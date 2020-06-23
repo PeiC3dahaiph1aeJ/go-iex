@@ -12,11 +12,11 @@ type Bar struct {
 	Symbol    string
 	OpenTime  time.Time
 	CloseTime time.Time
-	Open      float64
-	High      float64
-	Low       float64
-	Close     float64
-	Volume    int64
+	Open      uint64
+	High      uint64
+	Low       uint64
+	Close     uint64
+	Volume    uint64
 }
 
 // Construct a Bar for each distinct symbol in the given list
@@ -77,5 +77,5 @@ func updateBar(bar *Bar, trade *tops.TradeReportMessage) {
 
 	bar.CloseTime = trade.Timestamp
 	bar.Close = price
-	bar.Volume += int64(trade.Size)
+	bar.Volume += trade.Size
 }

@@ -79,7 +79,7 @@ func TestSecurityDirectoryMessage(t *testing.T) {
 		Timestamp:        time.Date(2017, time.April, 17, 07, 40, 0, 0, time.UTC),
 		Symbol:           "ZIEXT",
 		RoundLotSize:     100,
-		AdjustedPOCPrice: 99.05,
+		AdjustedPOCPrice: 990500,
 		LULDTier:         LULDTier1,
 	}
 
@@ -206,8 +206,8 @@ func TestQuoteUpdateMessage(t *testing.T) {
 		Timestamp:   time.Date(2016, time.August, 23, 19, 30, 32, 572715948, time.UTC),
 		Symbol:      "ZIEXT",
 		BidSize:     9700,
-		BidPrice:    99.05,
-		AskPrice:    99.07,
+		BidPrice:    990500,
+		AskPrice:    990700,
 		AskSize:     1000,
 	}
 
@@ -247,7 +247,7 @@ func TestTradeReportMessage(t *testing.T) {
 		Timestamp:          time.Date(2016, time.August, 23, 19, 30, 32, 572715948, time.UTC),
 		Symbol:             "ZIEXT",
 		Size:               100,
-		Price:              99.05,
+		Price:              990500,
 		TradeID:            429974,
 	}
 
@@ -308,7 +308,7 @@ func TestOfficialPriceMessage(t *testing.T) {
 		PriceType:     OpeningPrice,
 		Timestamp:     time.Date(2017, time.April, 17, 9, 30, 0, 0, time.UTC),
 		Symbol:        "ZIEXT",
-		OfficialPrice: 99.05,
+		OfficialPrice: 990500,
 	}
 
 	if opMsg != expected {
@@ -339,7 +339,7 @@ func TestTradeBreakMessage(t *testing.T) {
 		Timestamp:          time.Date(2016, time.August, 23, 19, 32, 04, 912754610, time.UTC),
 		Symbol:             "ZIEXT",
 		Size:               100,
-		Price:              99.05,
+		Price:              990500,
 		TradeID:            429974,
 	}
 
@@ -383,16 +383,16 @@ func TestAuctionInformationMessage(t *testing.T) {
 		Timestamp:                time.Date(2017, time.April, 17, 15, 50, 12, 462929885, time.UTC),
 		Symbol:                   "ZIEXT",
 		PairedShares:             27160,
-		ReferencePrice:           99.05,
-		IndicativeClearingPrice:  99.10,
+		ReferencePrice:           990500,
+		IndicativeClearingPrice:  991000,
 		ImbalanceShares:          4135,
 		ImbalanceSide:            BuySideImbalance,
 		ExtensionNumber:          0,
 		ScheduledAuctionTime:     time.Date(2017, time.April, 17, 16, 0, 0, 0, time.UTC),
-		AuctionBookClearingPrice: 99.15,
-		CollarReferencePrice:     99.04,
-		LowerAuctionCollar:       89.13,
-		UpperAuctionCollar:       108.95,
+		AuctionBookClearingPrice: 991500,
+		CollarReferencePrice:     990400,
+		LowerAuctionCollar:       891300,
+		UpperAuctionCollar:       1089500,
 	}
 
 	if aiMsg != expected {

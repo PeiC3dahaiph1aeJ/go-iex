@@ -82,7 +82,7 @@ func TestPriceLevelUpdateMessage_BuySide(t *testing.T) {
 		Timestamp:   time.Date(2016, time.August, 23, 19, 30, 32, 572715948, time.UTC),
 		Symbol:      "ZIEXT",
 		Size:        9700,
-		Price:       99.05,
+		Price:       990500,
 	}
 
 	if pluMsg != expected {
@@ -120,7 +120,7 @@ func TestPriceLevelUpdateMessage_SellSide(t *testing.T) {
 		Timestamp:   time.Date(2016, time.August, 23, 19, 30, 32, 572715948, time.UTC),
 		Symbol:      "ZIEXT",
 		Size:        9700,
-		Price:       99.05,
+		Price:       990500,
 	}
 
 	if pluMsg != expected {

@@ -48,10 +48,10 @@ func writeBar(bar *consolidator.Bar, w *csv.Writer) error {
 	row := []string{
 		bar.Symbol,
 		bar.OpenTime.Format(time.RFC3339),
-		strconv.FormatFloat(bar.Open, 'f', 4, 64),
-		strconv.FormatFloat(bar.High, 'f', 4, 64),
-		strconv.FormatFloat(bar.Low, 'f', 4, 64),
-		strconv.FormatFloat(bar.Close, 'f', 4, 64),
+		strconv.FormatInt(bar.Open, 10),
+		strconv.FormatInt(bar.High, 10),
+		strconv.FormatInt(bar.Low, 10),
+		strconv.FormatInt(bar.Close, 10),
 		strconv.FormatInt(bar.Volume, 10),
 	}
 

@@ -95,14 +95,6 @@ func ParseEventTime(buf []byte) time.Time {
 	return time.Unix(int64(timestampSecs), 0).In(time.UTC)
 }
 
-// Parse the TOPS price type: 8 bytes, signed integer containing
-// a fixed-point number with 4 digits to the right of an implied
-// decimal point, into a float64.
-func ParseFloat(buf []byte) float64 {
-	n := int64(binary.LittleEndian.Uint64(buf))
-	return float64(n) / 10000
-}
-
 // Parse the TOPS string type: fixed-length ASCII byte sequence,
 // left justified and space filled on the right.
 func ParseString(buf []byte) string {
@@ -175,7 +167,7 @@ type SecurityDirectoryMessage struct {
 	// When no corporate action has occurred, the Adjusted POC Price
 	// will be populated with the previous official close price. For
 	// new issues (e.g., an IPO), this field will be the issue price.
-	AdjustedPOCPrice float64
+	AdjustedPOCPrice uint64
 	// Indicates which Limit Up-Limit Down price band calculation
 	// parameter is to be used.
 	LULDTier uint8
@@ -193,7 +185,7 @@ func (m *SecurityDirectoryMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
 	m.RoundLotSize = binary.LittleEndian.Uint32(buf[18:22])
-	m.AdjustedPOCPrice = ParseFloat(buf[22:30])
+	m.AdjustedPOCPrice = binary.LittleEndian.Uint64(buf[22:30])
 	m.LULDTier = uint8(buf[30])
 
 	return nil
@@ -422,9 +414,9 @@ type QuoteUpdateMessage struct {
 	// Size of the quote at the bid, in number of shares.
 	BidSize uint32
 	// Price of the quote at the bid.
-	BidPrice float64
+	BidPrice uint64
 	// Price of the quote at the ask.
-	AskPrice float64
+	AskPrice uint64
 	// Size of the quote at the ask, in number of shares.
 	AskSize uint32
 }
@@ -441,8 +433,8 @@ func (m *QuoteUpdateMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
 	m.BidSize = binary.LittleEndian.Uint32(buf[18:22])
-	m.BidPrice = ParseFloat(buf[22:30])
-	m.AskPrice = ParseFloat(buf[30:38])
+	m.BidPrice = binary.LittleEndian.Uint64(buf[22:30])
+	m.AskPrice = binary.LittleEndian.Uint64(buf[30:38])
 	m.AskSize = binary.LittleEndian.Uint32(buf[38:42])
 	return nil
 }
@@ -469,10 +461,10 @@ type TradeReportMessage struct {
 	// Size of the trade, in number of shares.
 	Size uint32
 	// Execution price.
-	Price float64
+	Price uint64
 	// IEX generated trade identifier. A given trade is uniquely
 	// identified within a day by its TradeID.
-	TradeID int64
+	TradeID uint64
 }
 
 func (m *TradeReportMessage) Unmarshal(buf []byte) error {
@@ -487,8 +479,8 @@ func (m *TradeReportMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
 	m.Size = binary.LittleEndian.Uint32(buf[18:22])
-	m.Price = ParseFloat(buf[22:30])
-	m.TradeID = int64(binary.LittleEndian.Uint64(buf[30:38]))
+	m.Price = binary.LittleEndian.Uint64(buf[22:30])
+	m.TradeID = binary.LittleEndian.Uint64(buf[30:38])
 	return nil
 }
 
@@ -546,7 +538,7 @@ type OfficialPriceMessage struct {
 	// Security represented in Nasdaq Integrated symbology.
 	Symbol string
 	// IEX Official Opening or Closing Price of an IEX-listed security.
-	OfficialPrice float64
+	OfficialPrice uint64
 }
 
 func (m *OfficialPriceMessage) Unmarshal(buf []byte) error {
@@ -560,7 +552,7 @@ func (m *OfficialPriceMessage) Unmarshal(buf []byte) error {
 	m.PriceType = uint8(buf[1])
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
-	m.OfficialPrice = ParseFloat(buf[18:26])
+	m.OfficialPrice = binary.LittleEndian.Uint64(buf[18:26])
 	return nil
 }
 
@@ -578,10 +570,10 @@ type TradeBreakMessage struct {
 	// Size of the trade, in number of shares.
 	Size uint32
 	// Execution price.
-	Price float64
+	Price uint64
 	// IEX generated trade identifier. A given trade is uniquely
 	// identified within a day by its TradeID.
-	TradeID int64
+	TradeID uint64
 }
 
 func (m *TradeBreakMessage) Unmarshal(buf []byte) error {
@@ -596,8 +588,8 @@ func (m *TradeBreakMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
 	m.Size = binary.LittleEndian.Uint32(buf[18:22])
-	m.Price = ParseFloat(buf[22:30])
-	m.TradeID = int64(binary.LittleEndian.Uint64(buf[30:38]))
+	m.Price = binary.LittleEndian.Uint64(buf[22:30])
+	m.TradeID = binary.LittleEndian.Uint64(buf[30:38])
 	return nil
 }
 
@@ -617,9 +609,9 @@ type AuctionInformationMessage struct {
 	PairedShares uint32
 	// Clearing price at or within the Reference Price Range using orders
 	// on the Auction Book.
-	ReferencePrice float64
+	ReferencePrice uint64
 	// Clearing price using Eligible Auction Orders.
-	IndicativeClearingPrice float64
+	IndicativeClearingPrice uint64
 	// Number of unpaired shares at the Reference Price, using orders
 	// on the Auction Book.
 	ImbalanceShares uint32
@@ -631,13 +623,13 @@ type AuctionInformationMessage struct {
 	// Projected time of the auction match.
 	ScheduledAuctionTime time.Time
 	// Clearing price using orders on the Auction Book.
-	AuctionBookClearingPrice float64
+	AuctionBookClearingPrice uint64
 	// Reference price used for the auction collar, if any.
-	CollarReferencePrice float64
+	CollarReferencePrice uint64
 	// Lower threshold price of the auction collar, if any.
-	LowerAuctionCollar float64
+	LowerAuctionCollar uint64
 	// Upper threshold price of the auction caller, if any.
-	UpperAuctionCollar float64
+	UpperAuctionCollar uint64
 }
 
 func (m *AuctionInformationMessage) Unmarshal(buf []byte) error {
@@ -652,16 +644,16 @@ func (m *AuctionInformationMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = ParseTimestamp(buf[2:10])
 	m.Symbol = ParseString(buf[10:18])
 	m.PairedShares = binary.LittleEndian.Uint32(buf[18:22])
-	m.ReferencePrice = ParseFloat(buf[22:30])
-	m.IndicativeClearingPrice = ParseFloat(buf[30:38])
+	m.ReferencePrice = binary.LittleEndian.Uint64(buf[22:30])
+	m.IndicativeClearingPrice = binary.LittleEndian.Uint64(buf[30:38])
 	m.ImbalanceShares = binary.LittleEndian.Uint32(buf[38:42])
 	m.ImbalanceSide = uint8(buf[42])
 	m.ExtensionNumber = uint8(buf[43])
 	m.ScheduledAuctionTime = ParseEventTime(buf[44:48])
-	m.AuctionBookClearingPrice = ParseFloat(buf[48:56])
-	m.CollarReferencePrice = ParseFloat(buf[56:64])
-	m.LowerAuctionCollar = ParseFloat(buf[64:72])
-	m.UpperAuctionCollar = ParseFloat(buf[72:80])
+	m.AuctionBookClearingPrice = binary.LittleEndian.Uint64(buf[48:56])
+	m.CollarReferencePrice = binary.LittleEndian.Uint64(buf[56:64])
+	m.LowerAuctionCollar = binary.LittleEndian.Uint64(buf[64:72])
+	m.UpperAuctionCollar = binary.LittleEndian.Uint64(buf[72:80])
 	return nil
 }
 

@@ -58,15 +58,15 @@ type TOPS struct {
 	// Refers to amount of shares on the bid on IEX.
 	BidSize int
 	// Refers to the best bid price on IEX.
-	BidPrice float64
+	BidPrice uint64
 	// Refers to amount of shares on the ask on IEX.
 	AskSize int
 	// Refers to the best ask price on IEX.
-	AskPrice float64
+	AskPrice uint64
 	// Refers to shares traded in the stock on IEX.
 	Volume int
 	// Refers to last sale price of the stock on IEX. (Refer to the attribution section above.)
-	LastSalePrice float64
+	LastSalePrice uint64
 	// Refers to last sale size of the stock on IEX.
 	LastSaleSize int
 	// Refers to last sale time of the stock on IEX.
@@ -81,7 +81,7 @@ type Last struct {
 	// Refers to the stock ticker.
 	Symbol string
 	// Refers to last sale price of the stock on IEX. (Refer to the attribution section above.)
-	Price float64
+	Price uint64
 	// Refers to last sale size of the stock on IEX.
 	Size int
 	// Refers to last sale time in epoch time of the stock on IEX.
@@ -107,7 +107,7 @@ type DEEP struct {
 	Symbol        string
 	MarketPercent float64
 	Volume        int
-	LastSalePrice float64
+	LastSalePrice uint64
 	LastSaleSize  int
 	LastSaleTime  Time
 	LastUpdate    Time
@@ -123,8 +123,8 @@ type DEEP struct {
 }
 
 type Quote struct {
-	Price     float64
-	Size      float64
+	Price     uint64
+	Size      uint64
 	Timestamp Time
 }
 
@@ -156,7 +156,7 @@ type SecurityEventMessage struct {
 }
 
 type Trade struct {
-	Price                 float64
+	Price                 uint64
 	Size                  int
 	TradeID               int64
 	IsISO                 bool
@@ -168,7 +168,7 @@ type Trade struct {
 }
 
 type TradeBreak struct {
-	Price                 float64
+	Price                 uint64
 	Size                  int
 	TradeID               int64
 	IsISO                 bool
@@ -435,36 +435,36 @@ type StockQuote struct {
 	PrimaryExchange  string  // refers to the primary listings exchange.
 	Sector           string  // refers to the sector of the stock.
 	CalculationPrice string  // refers to the source of the latest price. ("tops", "sip", "previousclose" or "close")
-	Open             float64 // refers to the official open price
+	Open             uint64 // refers to the official open price
 	OpenTime         int64   // refers to the official listing exchange time for the open
-	Close            float64 // refers to the official close price
+	Close            uint64 // refers to the official close price
 	CloseTime        int64   // refers to the official listing exchange time for the close
-	High             float64 // refers to the market-wide highest price from the SIP. 15 minute delayed
-	Low              float64 // refers to the market-wide lowest price from the SIP. 15 minute delayed
-	LatestPrice      float64 // refers to the latest price being the IEX real time price, the 15 minute delayed market price, or the previous close price.
+	High             uint64 // refers to the market-wide highest price from the SIP. 15 minute delayed
+	Low              uint64 // refers to the market-wide lowest price from the SIP. 15 minute delayed
+	LatestPrice      uint64 // refers to the latest price being the IEX real time price, the 15 minute delayed market price, or the previous close price.
 	LatestSource     string  // refers to the source of latestPrice. ("IEX real time price", "15 minute delayed price", "Close" or "Previous close")
 	LatestTime       string  // refers to a human readable time of the latestPrice. The format will vary based on latestSource.
 	LatestUpdate     int64   // refers to the update time of latestPrice in milliseconds since midnight Jan 1, 1970.
 	LatestVolume     int64   // refers to the total market volume of the stock.
-	IexRealtimePrice float64 // refers to last sale price of the stock on IEX. (Refer to the attribution section above.)
+	IexRealtimePrice uint64 // refers to last sale price of the stock on IEX. (Refer to the attribution section above.)
 	IexRealtimeSize  int64   // refers to last sale size of the stock on IEX.
 	IexLastUpdated   int64   // refers to the last update time of the data in milliseconds since midnight Jan 1, 1970 UTC or -1 or 0. If the value is -1 or 0, IEX has not quoted the symbol in the trading day.
-	DelayedPrice     float64 // refers to the 15 minute delayed market price.
+	DelayedPrice     uint64 // refers to the 15 minute delayed market price.
 	DelayedPriceTime int64   // refers to the time of the delayed market price.
-	PreviousClose    float64 // refers to the adjusted close price of the last trading day of the stock.
-	Change           float64 // is calculated using calculationPrice from previousClose.
+	PreviousClose    uint64 // refers to the adjusted close price of the last trading day of the stock.
+	Change           uint64 // is calculated using calculationPrice from previousClose.
 	ChangePercent    float64 // is calculated using calculationPrice from previousClose.
 	IexMarketPercent float64 // refers to IEX’s percentage of the market in the stock.
 	IexVolume        int64   // refers to shares traded in the stock on IEX.
 	AvgTotalVolume   int64   // refers to the 30 day average volume on all markets.
-	IexBidPrice      float64 // refers to the best bid price on IEX.
+	IexBidPrice      uint64 // refers to the best bid price on IEX.
 	IexBidSize       int64   // refers to amount of shares on the bid on IEX.
-	IexAskPrice      float64 // refers to the best ask price on IEX.
+	IexAskPrice      uint64 // refers to the best ask price on IEX.
 	IexAskSize       int64   // refers to amount of shares on the ask on IEX.
 	MarketCap        int64   // is calculated in real time using calculationPrice.
 	PeRatio          float64 // is calculated in real time using calculationPrice.
-	Week52High       float64 // refers to the adjusted 52 week high.
-	Week52Low        float64 // refers to the adjusted 52 week low.
+	Week52High       uint64 // refers to the adjusted 52 week high.
+	Week52Low        uint64 // refers to the adjusted 52 week low.
 	YtdChange        float64 // refers to the price change percentage from start of year to previous close.
 }
 

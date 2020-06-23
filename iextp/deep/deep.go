@@ -142,7 +142,7 @@ type PriceLevelUpdateMessage struct {
 	// Aggregated quoted size.
 	Size uint32
 	// Price level to add/update in the IEX Order Book.
-	Price float64
+	Price uint64
 }
 
 func (m *PriceLevelUpdateMessage) IsBuySide() bool {
@@ -169,6 +169,6 @@ func (m *PriceLevelUpdateMessage) Unmarshal(buf []byte) error {
 	m.Timestamp = tops.ParseTimestamp(buf[2:10])
 	m.Symbol = tops.ParseString(buf[10:18])
 	m.Size = binary.LittleEndian.Uint32(buf[18:22])
-	m.Price = tops.ParseFloat(buf[22:30])
+	m.Price = binary.LittleEndian.Uint64(buf[22:30])
 	return nil
 }
