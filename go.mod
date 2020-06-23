@@ -1,4 +1,4 @@
-module github.com/timpalpant/go-iex
+module github.com/PeiC3dahaiph1aeJ/go-iex
 
 require (
 	github.com/google/go-cmp v0.2.0 // indirect
