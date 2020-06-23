@@ -1,5 +1,7 @@
 module github.com/PeiC3dahaiph1aeJ/go-iex
 
+go 1.14
+
 require (
 	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135

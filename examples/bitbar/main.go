@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/johnmccabe/go-bitbar"
-	"github.com/timpalpant/go-iex"
+	"github.com/PeiC3dahaiph1aeJ/go-iex"
 )
 
 func main() {

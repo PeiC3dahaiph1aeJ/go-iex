@@ -15,9 +15,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/timpalpant/go-iex"
-	"github.com/timpalpant/go-iex/consolidator"
-	"github.com/timpalpant/go-iex/iextp/tops"
+	"github.com/PeiC3dahaiph1aeJ/go-iex"
+	"github.com/PeiC3dahaiph1aeJ/go-iex/consolidator"
+	"github.com/PeiC3dahaiph1aeJ/go-iex/iextp/tops"
 )
 
 var header = []string{
